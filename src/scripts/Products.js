@@ -1,11 +1,12 @@
 const XLSX = require('xlsx');
+const formatter = require('../helpers/formatter')
 
 class Products {
     constructor(){
     }
 
     getProducts = () => {
-        const workbook = XLSX.readFile('./src/public/data/uploads/products.xlsx');
+        const workbook = XLSX.readFile('./public/data/uploads/products.xlsx');
         const sheetName = workbook.SheetNames[0];
         const sheet = workbook.Sheets[sheetName];
     
@@ -18,11 +19,7 @@ class Products {
     
         const products = XLSX.utils.sheet_to_json(sheet);
     
-        return products
-    }
-
-    saveProducts = () => {
-        
+        return formatter(products)
     }
 }
 

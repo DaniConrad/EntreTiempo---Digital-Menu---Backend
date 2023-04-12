@@ -2,7 +2,8 @@ const express = require('express')
 const storage = require('./src/helpers/multer')
 const multer = require('multer')
 const path = require('path')
-const Products = require('./src/helpers/Products')
+const Products = require('./src/scripts/Products')
+const cors = require('cors')
 
 //-- Initializers
 const app = express()
@@ -12,8 +13,13 @@ app.use(express.urlencoded({extended:false}))
 
 //-- Middlewares 
 app.use('/static', express.static(path.join(__dirname, './src/public')));
+app.use(cors())
 
 //-- Routes
+app.get('/dataloadmanagement', (req, res) => {
+    
+})
+
 app.get('/products', (req, res) => {
     res.send(Products.getProducts())
 })
