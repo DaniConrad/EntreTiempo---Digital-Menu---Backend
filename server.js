@@ -16,8 +16,8 @@ app.use('/static', express.static(path.join(__dirname, './src/public')));
 app.use(cors())
 
 //-- Routes
-app.get('/dataloadmanagement', (req, res) => {
-    
+app.post('/dataloadmanagement',  upload.single('Products'), (req, res) => {
+    res.send('success')
 })
 
 app.get('/products', (req, res) => {
@@ -25,9 +25,9 @@ app.get('/products', (req, res) => {
 })
 
 // app.post('/products', (req, res, next) => ProductsMiddlewares.verifyRole(req, res, next), upload.single('prodImg'), this.productsController.saveProduct)
-app.post('/products', upload.single('products'), (req, res) => {
-    res.send('success')
-})
+// app.post('/products', upload.single('products'), (req, res) => {
+//     res.send('success')
+// })
 
 // --Run server 
 const server = app.listen(PORT, ()=>{

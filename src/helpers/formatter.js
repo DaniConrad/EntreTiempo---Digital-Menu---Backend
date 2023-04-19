@@ -1,5 +1,3 @@
-
-
 const formatter = (products) => {
     const formatedProducts = products.map(prod => ({
         name : prod.Descripción,
