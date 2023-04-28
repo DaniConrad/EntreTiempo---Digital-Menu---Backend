@@ -4,7 +4,7 @@ const multer = require('multer')
 const path = require('path')
 const Products = require('./src/scripts/Products')
 const cors = require('cors')
-const getVariable = require('./src/Middlewares/AuthMiddleware')
+const verifyCode = require('./src/Middlewares/AuthMiddleware')
 
 //-- Initializers
 const app = express()
@@ -17,21 +17,13 @@ app.use('/static', express.static(path.join(__dirname, './src/public')));
 app.use(cors())
 
 //-- Routes
-app.post('/dataloadmanagement',  (req, res, next) => getVariable(req, res, next), upload.single('Products'),
+app.post(`/dataloadmanagement/:key`,  (req, res, next) => verifyCode(req, res, next), upload.single('Products'),
 
 )
 
 app.get('/products', (req, res) => {
     res.send(Products.getProducts())
 })
-
-console.log(getVariable());
-
-
-// app.post('/products', (req, res, next) => ProductsMiddlewares.verifyRole(req, res, next), upload.single('prodImg'), this.productsController.saveProduct)
-// app.post('/products', upload.single('products'), (req, res) => {
-//     res.send('success')
-// })
 
 // --Run server 
 const server = app.listen(PORT, ()=>{
