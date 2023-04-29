@@ -6,7 +6,7 @@ const formatter = (products) => {
         subCategory: prod["Sub rubro"]
         })
     )
-        
+    
     return formatedProducts
     
 }
