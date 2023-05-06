@@ -5,12 +5,14 @@ const path = require('path')
 const Products = require('./src/scripts/Products')
 const cors = require('cors')
 const verifyCode = require('./src/Middlewares/AuthMiddleware')
+const http = require("http")
 
 //-- Initializers
 const app = express()
 const PORT = process.env.PORT || 8080 
 const upload = multer({ storage: storage })
 app.use(express.urlencoded({extended:false}))
+const httpServer = http.createServer(app);
 
 //-- Middlewares 
 app.use('/static', express.static(path.join(__dirname, './src/public')));
@@ -26,7 +28,7 @@ app.get('/products', (req, res) => {
 })
 
 // --Run server 
-const server = app.listen(PORT, ()=>{
+const server = httpServer.listen(PORT, ()=>{
     console.log(`Server running in ${PORT}...`);
 })
 server.on('error', error => console.log('Error on server', error))
