@@ -19,6 +19,11 @@ app.use('/static', express.static(path.join(__dirname, './src/public')));
 app.use(cors())
 
 //-- Routes
+
+app.get("/", (req, res) => {
+    res.send("Running")
+})
+
 app.post(`/dataloadmanagement/:key`,  (req, res, next) => verifyCode(req, res, next), upload.single('Products'),
 
 )
