@@ -16,16 +16,8 @@ const upload = multer({ storage: storage })
 app.use(express.urlencoded({extended:false}))
 
 
-// SSL 
-const key = fs.readFileSync('./ssl/private.key')
-const cert = fs.readFileSync('./ssl/certificate.crt')
-const cred = {
-    key,
-    cert
-}
-
 // httpConfig 
-const httpsServer = https.createServer(cred, app);
+const httpServer = http.createServer(app);
 
 //-- Middlewares 
 app.use('/static', express.static(path.join(__dirname, './src/public')));
@@ -47,7 +39,7 @@ app.get('/products', (req, res) => {
 })
 
 // --Run server 
-const server = httpsServer.listen(PORT, ()=>{
+const server = httpServer.listen(PORT, ()=>{
     console.log(`Server running in ${PORT}...`);
 })
 server.on('error', error => console.log('Error on server', error))
