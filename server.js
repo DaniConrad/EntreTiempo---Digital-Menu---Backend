@@ -7,16 +7,25 @@ const cors = require('cors')
 const verifyCode = require('./src/Middlewares/AuthMiddleware')
 const http = require("http")
 const fs = require('fs')
+const https = require('https')
 
 //-- Initializers
 const app = express()
 const PORT = process.env.PORT || 8080 
 const upload = multer({ storage: storage })
 app.use(express.urlencoded({extended:false}))
-const httpServer = http.createServer(app);
+
 
 // SSL 
-const file = fs.readFileSync('./ssl/97D94AB13BDE5B641564C1FC65EA9368.txt')
+const key = fs.readFileSync('./ssl/private.key')
+const cert = fs.readFileSync('./ssl/certificate.crt')
+const cred = {
+    key,
+    cert
+}
+
+// httpConfig 
+const httpsServer = https.createServer(cred, app);
 
 //-- Middlewares 
 app.use('/static', express.static(path.join(__dirname, './src/public')));
@@ -24,9 +33,6 @@ app.use(cors())
 
 //-- Routes
 
-app.get("/.well-known/pki-validation/9B211C8A679E100CA6B2C6B7BF9A5466.txt", (req, res) => {
-    res.sendFile(path.join(__dirname, "./ssl/97D94AB13BDE5B641564C1FC65EA9368.txt"))
-})
 
 app.get("/", (req, res) => {
     res.send("Running")
@@ -41,7 +47,7 @@ app.get('/products', (req, res) => {
 })
 
 // --Run server 
-const server = httpServer.listen(PORT, ()=>{
+const server = httpsServer.listen(PORT, ()=>{
     console.log(`Server running in ${PORT}...`);
 })
 server.on('error', error => console.log('Error on server', error))
