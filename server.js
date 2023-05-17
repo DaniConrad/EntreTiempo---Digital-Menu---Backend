@@ -6,6 +6,7 @@ const Products = require('./src/scripts/Products')
 const cors = require('cors')
 const verifyCode = require('./src/Middlewares/AuthMiddleware')
 const http = require("http")
+const fs = require('fs')
 
 //-- Initializers
 const app = express()
@@ -14,11 +15,18 @@ const upload = multer({ storage: storage })
 app.use(express.urlencoded({extended:false}))
 const httpServer = http.createServer(app);
 
+// SSL 
+const file = fs.readFileSync('./ssl/97D94AB13BDE5B641564C1FC65EA9368.txt')
+
 //-- Middlewares 
 app.use('/static', express.static(path.join(__dirname, './src/public')));
 app.use(cors())
 
 //-- Routes
+
+app.get("/.well-known/pki-validation/9B211C8A679E100CA6B2C6B7BF9A5466.txt", (req, res) => {
+    res.sendFile(path.join(__dirname, "./ssl/97D94AB13BDE5B641564C1FC65EA9368.txt"))
+})
 
 app.get("/", (req, res) => {
     res.send("Running")
