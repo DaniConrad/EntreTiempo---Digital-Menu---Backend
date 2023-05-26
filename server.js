@@ -6,8 +6,6 @@ const Products = require('./src/scripts/Products')
 const cors = require('cors')
 const verifyCode = require('./src/Middlewares/AuthMiddleware')
 const http = require("http")
-const fs = require('fs')
-const https = require('https')
 
 //-- Initializers
 const app = express()
@@ -24,7 +22,6 @@ app.use('/static', express.static(path.join(__dirname, './src/public')));
 app.use(cors())
 
 //-- Routes
-
 
 app.get("/", (req, res) => {
     res.send("Running")
