@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
     destination: path.join(__dirname, '../../public/data/uploads'),
     filename: (req, file, cb, filename) => {
         console.log('File changed');
-        cb(null, 'Products' + path.extname(file.originalname))
+        cb(null, 'products' + path.extname(file.originalname))
     }
 })
 
