@@ -27,9 +27,9 @@ app.get("/", (req, res) => {
     res.send("Running")
 })
 
-app.post(`/dataloadmanagement/:key`,  (req, res, next) => verifyCode(req, res, next), upload.single('Products'),
+app.post(`/dataloadmanagement/:key`,  (req, res, next) => verifyCode(req, res, next), upload.single('Products'))
 
-)
+
 
 app.get('/products', (req, res) => {
     res.send(Products.getProducts())
