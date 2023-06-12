@@ -27,7 +27,11 @@ app.get("/", (req, res) => {
     res.send("Running")
 })
 
-app.post(`/dataloadmanagement/:key`,  (req, res, next) => verifyCode(req, res, next), upload.single('Products'))
+app.post(`/dataloadmanagement/products/:key`,  (req, res, next) => verifyCode(req, res, next), upload.single('Products'))
+
+app.post(`/dataloadmanagement/pizzas/:key`,  (req, res, next) => verifyCode(req, res, next), upload.single('Pizzas'))
+
+app.post(`/dataloadmanagement/empanadas/:key`,  (req, res, next) => verifyCode(req, res, next), upload.single('Empanadas'))
 
 
 
