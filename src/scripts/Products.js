@@ -6,55 +6,34 @@ class Products {
     }
 
     getProducts = () => {
-        const workbook = XLSX.readFile('./public/data/uploads/productos.xlsx');
-        const sheetName = workbook.SheetNames[0];
-        const sheet = workbook.Sheets[sheetName];
-    
-        const range = XLSX.utils.decode_range(sheet['!ref']);
-        const newRange = {
-        s: { r: 9, c: 0 },
-        e: { r: range.e.r, c: range.e.c }
-        };
-        sheet['!ref'] = XLSX.utils.encode_range(newRange);
-    
-        const products = XLSX.utils.sheet_to_json(sheet);
-    
-        return formatter(products)
-    }
+        let productsList = []
 
-    getPizzas = () => {
-        const workbook = XLSX.readFile('./public/data/uploads/empanadas.xlsx');
-        const sheetName = workbook.SheetNames[0];
-        const sheet = workbook.Sheets[sheetName];
-    
-        const range = XLSX.utils.decode_range(sheet['!ref']);
-        const newRange = {
-        s: { r: 9, c: 0 },
-        e: { r: range.e.r, c: range.e.c }
-        };
-        sheet['!ref'] = XLSX.utils.encode_range(newRange);
-    
-        const empanadas = XLSX.utils.sheet_to_json(sheet);
-    
-        return formatter(empanadas)
-    }
+        const workbooks = [
+            XLSX.readFile('./public/data/uploads/productos.xlsx'),
+            XLSX.readFile('./public/data/uploads/pizzas.xlsx'),
+            XLSX.readFile('./public/data/uploads/empanadas.xlsx')
+        ]
+            
+        for (let i = 0; i < workbooks.length; i++) {
 
-    getEmpanadas = () => {
-        const workbook = XLSX.readFile('./public/data/uploads/pizzas.xlsx');
-        const sheetName = workbook.SheetNames[0];
-        const sheet = workbook.Sheets[sheetName];
+            const sheetName = workbooks[i].SheetNames[0];
+            const sheet = workbooks[i].Sheets[sheetName];
+        
+            const range = XLSX.utils.decode_range(sheet['!ref']);
+            const newRange = {
+            s: { r: 9, c: 0 },
+            e: { r: range.e.r, c: range.e.c }
+            };
+            sheet['!ref'] = XLSX.utils.encode_range(newRange);
+        
+            const products = XLSX.utils.sheet_to_json(sheet);
+            productsList = productsList.concat(products)
+            console.log(productsList);
+        }
     
-        const range = XLSX.utils.decode_range(sheet['!ref']);
-        const newRange = {
-        s: { r: 9, c: 0 },
-        e: { r: range.e.r, c: range.e.c }
-        };
-        sheet['!ref'] = XLSX.utils.encode_range(newRange);
-    
-        const pizzas = XLSX.utils.sheet_to_json(sheet);
-    
-        return formatter(pizzas)
+        return formatter(productsList)
     }
+    
 }
 
 module.exports = new Products()

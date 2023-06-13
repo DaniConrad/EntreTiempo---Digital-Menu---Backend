@@ -1,9 +1,10 @@
 const formatter = (products) => {
     const formatedProducts = products.map(prod => ({
-        name : prod.Descripción,
-        price: prod.Precio,
-        category: prod.Rubro,
-        subCategory: prod["Sub rubro"]
+            name : prod.Descripción,
+            price: prod.Precio,
+            category: prod.Rubro,
+            subCategory: prod["Sub rubro"],
+            size: prod.Tamaño
         })
     )
     
