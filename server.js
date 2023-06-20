@@ -6,6 +6,7 @@ const Products = require('./src/scripts/Products')
 const cors = require('cors')
 const verifyCode = require('./src/Middlewares/AuthMiddleware')
 const http = require("http")
+const Logger = require('./src/logs/model/log4js.model')
 
 //-- Initializers
 const app = express()
@@ -29,10 +30,6 @@ app.get("/", (req, res) => {
 
 app.post(`/dataloadmanagement/products/:key`,  (req, res, next) => verifyCode(req, res, next), upload.single('Products'))
 
-app.post(`/dataloadmanagement/pizzas/:key`,  (req, res, next) => verifyCode(req, res, next), upload.single('Pizzas'))
-
-app.post(`/dataloadmanagement/empanadas/:key`,  (req, res, next) => verifyCode(req, res, next), upload.single('Empanadas'))
-
 
 
 app.get('/products', (req, res) => {
@@ -41,6 +38,6 @@ app.get('/products', (req, res) => {
 
 // --Run server 
 const server = httpServer.listen(PORT, ()=>{
-    console.log(`Server running in ${PORT}...`);
+    Logger.info(`Server running at ${PORT}`)
 })
 server.on('error', error => console.log('Error on server', error))
