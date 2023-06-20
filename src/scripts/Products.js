@@ -9,9 +9,9 @@ class Products {
         let productsList = []
 
         const workbooks = [
-            XLSX.readFile('./public/data/uploads/productos.xlsx'),
-            XLSX.readFile('./public/data/uploads/pizzas.xlsx'),
-            XLSX.readFile('./public/data/uploads/empanadas.xlsx')
+            XLSX.readFile('./public/data/uploads/Productos.xlsx'),
+            XLSX.readFile('./public/data/uploads/Pizzas.xlsx'),
+            XLSX.readFile('./public/data/uploads/Empanadas.xlsx')
         ]
             
         for (let i = 0; i < workbooks.length; i++) {
@@ -28,7 +28,6 @@ class Products {
         
             const products = XLSX.utils.sheet_to_json(sheet);
             productsList = productsList.concat(products)
-            console.log(productsList);
         }
     
         return formatter(productsList)
